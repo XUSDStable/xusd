@@ -49,16 +49,3 @@ $$/   $$/  $$$$$$/   $$$$$$/  $$$$$$$/ $$/ $$/      $$/  $$$$$$/  $$/   $$/  $$$
           * 3*(1-CR) boost when global CR is between 0% and 100%
 
 ## Contracts
-
-* XUSDStablecoin: 0x8E3E1409aE4f554092139E4932165B127Fe4E6Ca
-* XUSDShares: 0xA1266323cbef54Cb18B8FC425945B2d8f1311D26
-* XUSDFeePool: 0x376597E8C6182De942E87E00Db09b7fa754b8Dc3
-* Timelock: 0x8c18e770B49A5879D8998eC26f2bb5A4Cb3Ec2e7
-* Collateral pools:
-  * Pool_WETH: 0x6394E727768b8E0696272600Baf749752e292D44
-  * Pool_DAI: 0xD35D53Ab915761D8920e6d407632a09913A14a60
-* Staking pools:
-  * Staking_XUSD(1x): 0x6D3B558877d2Dc3cd998A02389e12DF1Af8A0F40
-  * Staking_BAC_XUSD(2x): 0x3F7985fCFFdb52a429cB15c28B0756e560Dd0cfA
-  * Staking_ETH_XUSD(2x): 0xe32Ce9ea3559d668cA42B7878Ca7df990738384b
-  * Staking_XUS_XUSD(5x): 0xEF0622bFa2F474a067e763ACFd96355aA372bEB9
