@@ -140,9 +140,9 @@ module.exports = async function(deployer, network, accounts) {
 
 	console.log(`=====Setting period back=====`);
 	await Promise.all([
-		oracle_instance_XUSD_WETH.setPeriod(86400),
-		oracle_instance_XUS_WETH.setPeriod(86400),
-		oracle_instance_DAI_WETH.setPeriod(86400)
+		oracle_instance_XUSD_WETH.setPeriod(3600),
+		oracle_instance_XUS_WETH.setPeriod(3600),
+		oracle_instance_DAI_WETH.setPeriod(3600)
 	]);
 
 	console.log(`=====Logging all contract addresses=====`);

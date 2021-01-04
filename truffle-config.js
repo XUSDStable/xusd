@@ -36,8 +36,8 @@ module.exports = {
 		mainnet: {
 			provider: providerFactory(),
 			network_id: 1,
-			gas: 8000000,      // Make sure this gas allocation isn't over 4M, which is the max
-			gasPrice: 100000000000
+			gas: 4000000,      // Make sure this gas allocation isn't over 4M, which is the max
+			gasPrice: 600000000000
 		},
 		ropsten: {
 			provider: providerFactory(),
@@ -65,7 +65,7 @@ module.exports = {
 		}
 	},
 	mocha: {
-		useColors: true
+		useColors: true,
 	},
 	plugins: ["truffle-contract-size", "truffle-plugin-verify"],
 	api_keys: {

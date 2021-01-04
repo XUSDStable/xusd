@@ -56,6 +56,7 @@ contract StakingRewards is IStakingRewards, ReentrancyGuard, Pausable {
 
     address private dev_address;
     uint256 private dev_fee;
+    uint256 public start_time;
 
     /* ========== CONSTRUCTOR ========== */
 
@@ -66,7 +67,8 @@ contract StakingRewards is IStakingRewards, ReentrancyGuard, Pausable {
         address _stakingToken,
         address _xusd_address,
         address _timelock_address,
-        uint256 _pool_weight
+        uint256 _pool_weight,
+        uint256 _start_time
     ) public Owned(msg.sender){
         owner_address = msg.sender;
         dev_address = _dev_address;
@@ -79,6 +81,24 @@ contract StakingRewards is IStakingRewards, ReentrancyGuard, Pausable {
         timelock_address = _timelock_address;
         pool_weight = _pool_weight;
         rewardRate = 771604938271604938; // (uint256(2000000e18)).div(30 * 86400); // Base emission rate of 2M XUS over the first month
+        rewardRate = rewardRate.mul(pool_weight).div(1e6);
+
+        start_time = _start_time;
+    }
+
+    modifier checkStart() {
+        require(block.timestamp >= start_time, "not yet");
+        _;
+    }
+
+    function setStart(uint256 _start_time) external {
+        require(msg.sender == owner_address, "unauthorized");
+        start_time = _start_time;
+    }
+
+    function setPoolWeight(uint256 _weight) external {
+        require(msg.sender == owner_address, "unauthorized");
+        pool_weight = _weight;
         rewardRate = rewardRate.mul(pool_weight).div(1e6);
     }
 
@@ -127,7 +147,7 @@ contract StakingRewards is IStakingRewards, ReentrancyGuard, Pausable {
 
     /* ========== MUTATIVE FUNCTIONS ========== */
 
-    function stake(uint256 amount) external override nonReentrant notPaused updateReward(msg.sender) {
+    function stake(uint256 amount) external override nonReentrant notPaused updateReward(msg.sender) checkStart {
         require(amount > 0, "Cannot stake 0");
 
         _staking_token_supply = _staking_token_supply.add(amount);
@@ -138,7 +158,7 @@ contract StakingRewards is IStakingRewards, ReentrancyGuard, Pausable {
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public override nonReentrant updateReward(msg.sender) {
+    function withdraw(uint256 amount) public override nonReentrant updateReward(msg.sender) checkStart {
         require(amount > 0, "Cannot withdraw 0");
 
         _staking_token_supply = _staking_token_supply.sub(amount);
@@ -149,7 +169,7 @@ contract StakingRewards is IStakingRewards, ReentrancyGuard, Pausable {
         emit Withdrawn(msg.sender, amount);
     }
 
-    function getReward() public override nonReentrant updateReward(msg.sender) {
+    function getReward() public override nonReentrant updateReward(msg.sender) checkStart {
         uint256 reward = rewards[msg.sender];
         uint256 dev_reward = reward.mul(dev_fee).div(1e6);
         if (reward > 0) {

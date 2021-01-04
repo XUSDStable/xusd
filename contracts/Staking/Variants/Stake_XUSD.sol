@@ -12,8 +12,9 @@ contract Stake_XUSD is StakingRewards {
         address _stakingToken,
         address _xusd_address,
         address _timelock_address,
-        uint256 _pool_weight
+        uint256 _pool_weight,
+        uint256 _start_time
     ) 
-    StakingRewards(_dev, _fee, _rewardsToken, _stakingToken, _xusd_address, _timelock_address, _pool_weight)
+    StakingRewards(_dev, _fee, _rewardsToken, _stakingToken, _xusd_address, _timelock_address, _pool_weight, _start_time)
     public {}
 }

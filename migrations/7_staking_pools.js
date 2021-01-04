@@ -94,6 +94,7 @@ module.exports = async function(deployer, network, accounts) {
 	const ONE_HUNDRED_MILLION_DEC6 = new BigNumber("100000000e6");
 	const ONE_BILLION_DEC18 = new BigNumber("1000000000e18");
 	const COLLATERAL_SEED_DEC18 = new BigNumber(508500e18);
+	const start_time = new BigNumber(1609804800);
 
 	let routerInstance;
 	let uniswapFactoryInstance;
@@ -127,10 +128,10 @@ module.exports = async function(deployer, network, accounts) {
 	// ======== Deploy the staking contracts ========
 	console.log(chalk.yellow('===== DEPLOY THE STAKING CONTRACTS ====='));
 	await Promise.all([
-		deployer.deploy(StakingRewards_XUSD_WETH, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUSD_WETH, XUSDStablecoin.address, timelock_addr, 200000),
-		deployer.deploy(StakingRewards_XUS_XUSD, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUS_XUSD, XUSDStablecoin.address, timelock_addr, 500000),
-		deployer.deploy(StakingRewards_BAC_XUSD, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_BAC_XUSD, XUSDStablecoin.address, timelock_addr, 200000),
-		deployer.deploy(StakingRewards_XUSD, DEV_ADDRESS, DEV_FEE, xusInstance.address, XUSDStablecoin.address, XUSDStablecoin.address, timelock_addr, 100000)
+		deployer.deploy(StakingRewards_XUSD_WETH, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUSD_WETH, XUSDStablecoin.address, timelock_addr, 200000, start_time),
+		deployer.deploy(StakingRewards_XUS_XUSD, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUS_XUSD, XUSDStablecoin.address, timelock_addr, 500000, start_time),
+		deployer.deploy(StakingRewards_BAC_XUSD, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_BAC_XUSD, XUSDStablecoin.address, timelock_addr, 200000, start_time),
+		deployer.deploy(StakingRewards_XUSD, DEV_ADDRESS, DEV_FEE, xusInstance.address, XUSDStablecoin.address, XUSDStablecoin.address, timelock_addr, 100000, start_time)
 	])
 	
 	// ======== Get various staking addresses ======== 
