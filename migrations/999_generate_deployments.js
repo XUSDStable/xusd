@@ -20,8 +20,13 @@ const exportedContracts = [
   'Pool_DAI',
   'Stake_XUSD_WETH',
   'Stake_XUS_XUSD',
+  'Stake_XUS_WETH',
   'Stake_BAC_XUSD',
   "Stake_XUSD",
+  // new pools
+  "Stake_XUS_WETH_NEW",
+  "Stake_XUS_XUSD_NEW",
+  "Stake_XUSD_DAI",
   //"FakeCollateral_WETH",
   //"FakeCollateral_DAI",
   //"FakeCollateral_BAC",

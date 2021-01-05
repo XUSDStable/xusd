@@ -85,16 +85,34 @@ module.exports = async function(deployer, network, accounts) {
 
 	let lastUpdateTime = Date.now();
 	while(1) {
-		let now = Date.now();
-		if(now - lastUpdateTime > 3600 * 1000) {
-			console.log(now, "updating collateral ratio and oracle prices...")
-			await Promise.all([
-				oracle_instance_XUSD_WETH.update(),
-				oracle_instance_XUS_WETH.update(),
-				oracle_instance_DAI_WETH.update(),
-				xusdInstance.refreshCollateralRatio()
-			]);
-			lastUpdateTime = now;
+		try {
+			let now = Date.now() / 1000;
+			let ts1 = await oracle_instance_XUSD_WETH.blockTimestampLast.call();
+			let ts2 = await oracle_instance_XUS_WETH.blockTimestampLast.call();
+			let ts3 = await oracle_instance_DAI_WETH.blockTimestampLast.call();
+			let ts4 = await xusdInstance.last_call_time.call();
+			if(now - ts1 > 3600) {
+				console.log('updating ETH/XUSD oracle...');
+				await oracle_instance_XUSD_WETH.update.sendTransaction();
+			}
+			if(now - ts2 > 3600) {
+				console.log('updating ETH/XUS oracle...');
+				await oracle_instance_XUS_WETH.update.sendTransaction();
+			}
+			if(now - ts3 > 3600) {
+				console.log('updating ETH/DAI oracle...');
+				await oracle_instance_DAI_WETH.update.sendTransaction();
+			}
+			if(now - ts4 > 3600) {
+				console.log('refreshing target collateral ratio...');
+				// xusdInstance.refreshCollateralRatio.sendTransaction();
+			}
+			function timeout(ms) {
+				return new Promise(resolve => setTimeout(resolve, ms));
+			}
+			await timeout(60000);
+		} catch (e) {
+			console.log('error:', e);
 		}
 	}
 };
