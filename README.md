@@ -41,8 +41,8 @@ $$/   $$/  $$$$$$/   $$$$$$/  $$$$$$$/ $$/ $$/      $$/  $$$$$$/  $$/   $$/  $$$
       * Gathered to contract `XUSDFeePool`
       * Fees will be used to buyback XUS or distributed to XUS holders
   * <b>XUS Staking Rewards</b> 
-      * 10 million total supply
-      * Reward rate half every month, first month reward: min. 2 million, max. 6 million
+      * ~~10 million~~ 500k total supply
+      * Reward rate half every month, first month reward: min. 100k, max. 300k
       * Collateral ratio(CR) boost
           * No boost when global CR is 100%
           * 3x boost when global CR is 0%
@@ -55,7 +55,7 @@ $$/   $$/  $$$$$$/   $$$$$$/  $$$$$$$/ $$/ $$/      $$/  $$$$$$/  $$/   $$/  $$$
 * XUSDFeePool: 0x6049B0831F8da67f3FE80f5FA07BD300E8f2F22C
 * Timelock: 0x75061b5c168477499b3e297AdA97a1d22b72A264
 * Collateral pools:
-  * ~~Pool_WETH: 0x7E9320C98389CB43B957Ff2399eA315Bce72fdb4~~(Mint Disabled)
+  * Pool_WETH: 0x7E9320C98389CB43B957Ff2399eA315Bce72fdb4(Mint Disabled Temporarily)
   * Pool_DAI: 0x10A06343231Dd722800f2139Edf34a1562549DE3
 * ~~Staking pools:~~
   * ~~Staking_XUSD(1x): 0x5CA353CC4dA1B235C7b60Dde5065eB32195138b5~~

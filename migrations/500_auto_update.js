@@ -105,7 +105,7 @@ module.exports = async function(deployer, network, accounts) {
 			}
 			if(now - ts4 > 3600) {
 				console.log('refreshing target collateral ratio...');
-				// xusdInstance.refreshCollateralRatio.sendTransaction();
+				xusdInstance.refreshCollateralRatio.sendTransaction();
 			}
 			function timeout(ms) {
 				return new Promise(resolve => setTimeout(resolve, ms));
