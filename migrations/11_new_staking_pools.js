@@ -127,37 +127,37 @@ module.exports = async function(deployer, network, accounts) {
 		uniswapFactoryInstance = await UniswapV2Factory.deployed();
 	}
 
-	const pair_addr_XUS_WETH = await uniswapFactoryInstance.getPair(xusInstance.address, wethInstance.address);
-	const pair_addr_XUS_XUSD = await uniswapFactoryInstance.getPair(xusInstance.address, xusdInstance.address);
+	// const pair_addr_XUS_WETH = await uniswapFactoryInstance.getPair(xusInstance.address, wethInstance.address);
+	// const pair_addr_XUS_XUSD = await uniswapFactoryInstance.getPair(xusInstance.address, xusdInstance.address);
 	const pair_addr_XUSD_DAI = await uniswapFactoryInstance.getPair(daiInstance.address, xusdInstance.address);
 
 	// ======== Deploy the staking contracts ========
 	console.log(chalk.yellow('===== DEPLOY THE STAKING CONTRACTS ====='));
-	await Promise.all([
-		deployer.deploy(StakingRewards_XUS_WETH_NEW, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUS_WETH, XUSDStablecoin.address, timelock_addr, 400000, start_time),
-		deployer.deploy(StakingRewards_XUS_XUSD_NEW, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUS_XUSD, XUSDStablecoin.address, timelock_addr, 400000, start_time),
-		deployer.deploy(StakingRewards_XUSD_DAI, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUSD_DAI, XUSDStablecoin.address, timelock_addr, 200000, start_time)
-	])
+	// await Promise.all([
+	// 	// deployer.deploy(StakingRewards_XUS_WETH_NEW, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUS_WETH, XUSDStablecoin.address, timelock_addr, 400000, start_time),
+	// 	// deployer.deploy(StakingRewards_XUS_XUSD_NEW, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUS_XUSD, XUSDStablecoin.address, timelock_addr, 400000, start_time),
+	// 	deployer.deploy(StakingRewards_XUSD_DAI, DEV_ADDRESS, DEV_FEE, xusInstance.address, pair_addr_XUSD_DAI, XUSDStablecoin.address, timelock_addr, 200000, start_time)
+	// ])
 	
 	// ======== Get various staking addresses ======== 
-	const stakingInstance_XUS_WETH_NEW = await StakingRewards_XUS_WETH_NEW.deployed();
+	// const stakingInstance_XUS_WETH_NEW = await StakingRewards_XUS_WETH_NEW.deployed();
 	const stakingInstance_XUSD_DAI = await StakingRewards_XUSD_DAI.deployed();
-	const stakingInstance_XUS_XUSD_NEW = await StakingRewards_XUS_XUSD_NEW.deployed();
+	// const stakingInstance_XUS_XUSD_NEW = await StakingRewards_XUS_XUSD_NEW.deployed();
 
-	console.log(`XUS_WETH_NEW: ${stakingInstance_XUS_WETH_NEW.address}`);
-	console.log(`XUS_XUSD_NEW: ${stakingInstance_XUS_XUSD_NEW.address}`);
+	// console.log(`XUS_WETH_NEW: ${stakingInstance_XUS_WETH_NEW.address}`);
+	// console.log(`XUS_XUSD_NEW: ${stakingInstance_XUS_XUSD_NEW.address}`);
 	console.log(`XUSD_DAI: ${stakingInstance_XUSD_DAI.address}`);
 
 	console.log(chalk.yellow.bold('======== Initialize the staking rewards ========'));
 	await Promise.all([
-		stakingInstance_XUS_WETH_NEW.initializeDefault(),
+		// stakingInstance_XUS_WETH_NEW.initializeDefault(),
 		stakingInstance_XUSD_DAI.initializeDefault(),
-		stakingInstance_XUS_XUSD_NEW.initializeDefault()
+		// stakingInstance_XUS_XUSD_NEW.initializeDefault()
 	]);
 	
 	// add to XUS staking pools
 	console.log(`=====Adding reward pools to XUS contract=====`);
-	await xusInstance.addRewardPool.sendTransaction(stakingInstance_XUS_WETH_NEW.address, new BigNumber("200000e18"));
-	await xusInstance.addRewardPool.sendTransaction(stakingInstance_XUS_XUSD_NEW.address, new BigNumber("200000e18"));
+	// await xusInstance.addRewardPool.sendTransaction(stakingInstance_XUS_WETH_NEW.address, new BigNumber("200000e18"));
+	// await xusInstance.addRewardPool.sendTransaction(stakingInstance_XUS_XUSD_NEW.address, new BigNumber("200000e18"));
 	await xusInstance.addRewardPool.sendTransaction(stakingInstance_XUSD_DAI.address, new BigNumber("100000e18"));
 };

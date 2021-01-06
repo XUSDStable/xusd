@@ -18,6 +18,7 @@ const exportedContracts = [
   'XUSDShares',
   'Pool_WETH',
   'Pool_DAI',
+  'Pool_DAI_NEW',
   'Stake_XUSD_WETH',
   'Stake_XUS_XUSD',
   'Stake_XUS_WETH',

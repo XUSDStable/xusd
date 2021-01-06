@@ -59,6 +59,9 @@ contract Pool_DAI_NEW {
 
     address feepool_address;
 
+    ChainlinkETHUSDPriceConsumer private dai_usd_pricer;
+    uint8 private dai_usd_pricer_decimals;
+    address public dai_usd_consumer_address;
     /* ========== MODIFIERS ========== */
 
     modifier onlyByOwnerOrGovernance() {
@@ -97,14 +100,21 @@ contract Pool_DAI_NEW {
         missing_decimals = uint(18).sub(collateral_token.decimals());
     }
 
+    function setDAIUSDOracle(address _dai_usd_consumer_address) public onlyByOwnerOrGovernance {
+        dai_usd_consumer_address = _dai_usd_consumer_address;
+        dai_usd_pricer = ChainlinkETHUSDPriceConsumer(dai_usd_consumer_address);
+        dai_usd_pricer_decimals = dai_usd_pricer.getDecimals();
+    }
+
     /* ========== VIEWS ========== */
 
     // Returns dollar value of collateral held in this XUSD pool
     function collatDollarBalance() public view returns (uint256) {
-        uint256 eth_usd_price = XUSD.eth_usd_price();
-        uint256 eth_collat_price = collatEthOracle.consult(weth_address, (PRICE_PRECISION * (10 ** missing_decimals)));
+        // uint256 eth_usd_price = XUSD.eth_usd_price();
+        // uint256 eth_collat_price = collatEthOracle.consult(weth_address, (PRICE_PRECISION * (10 ** missing_decimals)));
 
-        uint256 collat_usd_price = eth_usd_price.mul(PRICE_PRECISION).div(eth_collat_price);
+        // uint256 collat_usd_price = eth_usd_price.mul(PRICE_PRECISION).div(eth_collat_price);
+        uint256 collat_usd_price = uint256(dai_usd_pricer.getLatestPrice()).mul(1e6).div(uint256(10) ** dai_usd_pricer_decimals);
         return (collateral_token.balanceOf(address(this)).sub(unclaimedPoolCollateral)).mul(10 ** missing_decimals).mul(collat_usd_price).div(PRICE_PRECISION); //.mul(getCollateralPrice()).div(1e6);    
     }
 
@@ -124,8 +134,9 @@ contract Pool_DAI_NEW {
         if(collateralPricePaused == true) {
             return pausedPrice;
         } else {
-            ( , , , , , , , uint256 eth_usd_price) = XUSD.xusd_info();
-            return eth_usd_price.mul(PRICE_PRECISION).div(collatEthOracle.consult(weth_address, PRICE_PRECISION * (10 ** missing_decimals)));
+            // ( , , , , , , , uint256 eth_usd_price) = XUSD.xusd_info();
+            // return eth_usd_price.mul(PRICE_PRECISION).div(collatEthOracle.consult(weth_address, PRICE_PRECISION * (10 ** missing_decimals)));
+            return uint256(dai_usd_pricer.getLatestPrice()).mul(1e6).div(uint256(10) ** dai_usd_pricer_decimals); //dai_usd_price
         }
     }
 

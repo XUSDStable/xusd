@@ -56,12 +56,8 @@ $$/   $$/  $$$$$$/   $$$$$$/  $$$$$$$/ $$/ $$/      $$/  $$$$$$/  $$/   $$/  $$$
 * Timelock: 0x75061b5c168477499b3e297AdA97a1d22b72A264
 * Collateral pools:
   * Pool_WETH: 0x7E9320C98389CB43B957Ff2399eA315Bce72fdb4(Mint Disabled Temporarily)
-  * Pool_DAI: 0x10A06343231Dd722800f2139Edf34a1562549DE3
-* ~~Staking pools:~~
-  * ~~Staking_XUSD(1x): 0x5CA353CC4dA1B235C7b60Dde5065eB32195138b5~~
-  * ~~Staking_BAC_XUSD(2x): 0xf73004dE7AA4b0D0B7Dc01464824CCB3DeCdcca9~~
-  * ~~Staking_ETH_XUSD(2x): 0x1496e1Ac0509F1165AD9B54d14AC3980f462dc52~~
-  * ~~Staking_XUS_XUSD(5x): 0x608a79fB8f345BB469B288AB8503FB3f5EFA1f43~~
+  * ~~Pool_DAI: 0x10A06343231Dd722800f2139Edf34a1562549DE3~~ (Mint Disabled)
+  * Pool_DAI_NEW: 0xf13a49Eb6b2F6918500ee5cf8b39bb15a38F5b32 (Chainlink oracle)
 * Staking pools:
   * XUS/ETH-LP(40%): 0x39d8189306a254120EF88e0A465808BB6532d63B
   * XUS/XUSD-LP(40%): 0x608D8b1511Cb3eB7dbcCb5c626922EBfE7A62583
