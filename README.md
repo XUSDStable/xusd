@@ -57,8 +57,6 @@ $$/   $$/  $$$$$$/   $$$$$$/  $$$$$$$/ $$/ $$/      $$/  $$$$$$/  $$/   $$/  $$$
 * Collateral pools:
   * Pool_DAI: 0xf13a49Eb6b2F6918500ee5cf8b39bb15a38F5b32 (Chainlink oracle)
   * Pool_USDC: 0x75aAf03CBF330e2b3F0623c55B7a528CFCAE8d75 (Chainlink oracle)
-  * ~~Pool_WETH: 0x7E9320C98389CB43B957Ff2399eA315Bce72fdb4(Disabled Temporarily)~~
-  * ~~Pool_DAI: 0x10A06343231Dd722800f2139Edf34a1562549DE3 (Disabled)~~
 * Staking pools:
   * XUS/XUSD-LP(30%): 0x608D8b1511Cb3eB7dbcCb5c626922EBfE7A62583
   * XUS/ETH-LP(20%): 0x39d8189306a254120EF88e0A465808BB6532d63B
