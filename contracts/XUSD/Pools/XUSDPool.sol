@@ -59,6 +59,9 @@ contract XUSDPool {
 
     address feepool_address;
 
+    ChainlinkETHUSDPriceConsumer private collat_usd_pricer;
+    uint8 private collat_usd_pricer_decimals;
+    address public collat_usd_consumer_address;
     /* ========== MODIFIERS ========== */
 
     modifier onlyByOwnerOrGovernance() {
@@ -73,6 +76,11 @@ contract XUSDPool {
 
     modifier notMintPaused() {
         require(mintPaused == false, "mint paused");
+        _;
+    }
+
+    modifier checkContract() {
+        require(msg.sender == tx.origin, "contract not support");
         _;
     }
  
@@ -97,14 +105,21 @@ contract XUSDPool {
         missing_decimals = uint(18).sub(collateral_token.decimals());
     }
 
+    function setCollatUSDOracle(address _collat_usd_consumer_address) public onlyByOwnerOrGovernance {
+        collat_usd_consumer_address = _collat_usd_consumer_address;
+        collat_usd_pricer = ChainlinkETHUSDPriceConsumer(collat_usd_consumer_address);
+        collat_usd_pricer_decimals = collat_usd_pricer.getDecimals();
+    }
+
     /* ========== VIEWS ========== */
 
     // Returns dollar value of collateral held in this XUSD pool
     function collatDollarBalance() public view returns (uint256) {
-        uint256 eth_usd_price = XUSD.eth_usd_price();
-        uint256 eth_collat_price = collatEthOracle.consult(weth_address, (PRICE_PRECISION * (10 ** missing_decimals)));
+        // uint256 eth_usd_price = XUSD.eth_usd_price();
+        // uint256 eth_collat_price = collatEthOracle.consult(weth_address, (PRICE_PRECISION * (10 ** missing_decimals)));
 
-        uint256 collat_usd_price = eth_usd_price.mul(PRICE_PRECISION).div(eth_collat_price);
+        // uint256 collat_usd_price = eth_usd_price.mul(PRICE_PRECISION).div(eth_collat_price);
+        uint256 collat_usd_price = uint256(collat_usd_pricer.getLatestPrice()).mul(1e6).div(uint256(10) ** collat_usd_pricer_decimals);
         return (collateral_token.balanceOf(address(this)).sub(unclaimedPoolCollateral)).mul(10 ** missing_decimals).mul(collat_usd_price).div(PRICE_PRECISION); //.mul(getCollateralPrice()).div(1e6);    
     }
 
@@ -124,15 +139,10 @@ contract XUSDPool {
         if(collateralPricePaused == true) {
             return pausedPrice;
         } else {
-            ( , , , , , , , uint256 eth_usd_price) = XUSD.xusd_info();
-            return eth_usd_price.mul(PRICE_PRECISION).div(collatEthOracle.consult(weth_address, PRICE_PRECISION * (10 ** missing_decimals)));
+            // ( , , , , , , , uint256 eth_usd_price) = XUSD.xusd_info();
+            // return eth_usd_price.mul(PRICE_PRECISION).div(collatEthOracle.consult(weth_address, PRICE_PRECISION * (10 ** missing_decimals)));
+            return uint256(collat_usd_pricer.getLatestPrice()).mul(1e6).div(uint256(10) ** collat_usd_pricer_decimals); //collat_usd_price
         }
-    }
-
-    function setCollatETHOracle(address _collateral_weth_oracle_address, address _weth_address) external onlyByOwnerOrGovernance {
-        collat_eth_oracle_address = _collateral_weth_oracle_address;
-        collatEthOracle = UniswapPairOracle(_collateral_weth_oracle_address);
-        weth_address = _weth_address;
     }
 
     function setFeePool(address _feepool) external onlyByOwnerOrGovernance {

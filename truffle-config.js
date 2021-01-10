@@ -37,7 +37,7 @@ module.exports = {
 			provider: providerFactory(),
 			network_id: 1,
 			gas: 8000000,      // Make sure this gas allocation isn't over 4M, which is the max
-			gasPrice: 150000000000
+			gasPrice: 80000000000
 		},
 		ropsten: {
 			provider: providerFactory(),

@@ -11,6 +11,9 @@ import "./Pools/IXUSDPool.sol";
 import "../Oracle/UniswapPairOracle.sol";
 import "../Oracle/ChainlinkETHUSDPriceConsumer.sol";
 
+/**
+    TODO: set XUSETH oracle to XUS_WETH_NEW
+ */
 contract XUSDStablecoin is ERC20Custom {
     using SafeMath for uint256;
 
