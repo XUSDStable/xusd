@@ -66,3 +66,5 @@ $$/   $$/  $$$$$$/   $$$$$$/  $$$$$$$/ $$/ $$/      $$/  $$$$$$/  $$/   $$/  $$$
 * Oracles:
   * Uniswap_ETH/XUSD: 0xA98Ce5bB71652b58eF6D0ab23778a355f89639B1
   * Uniswap_XUS/ETH: 0x6c36E0eFb05733FeB2e2033d29B16314b20E04a2
+  * ChainlinkDAIUSDPriceConsumer: 0x0cD255e2f97E9DCD28c375046bB45149097d7889
+  * ChainlinkUSDCUSDPriceConsumer: 0xF67405E155B67a472b3c02dFeB0932C2579F4682
